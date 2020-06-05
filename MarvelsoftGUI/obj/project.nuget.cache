@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "cLPFfb8diqJof/I8L+1lP82Rytzq3p4Y6jsj4U9ZdjAx4RtdI3/BipsC63a18NxHfLhnzirFvdbnV3F4mNBuZQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\zlome\\source\\repos\\Marvelsoft\\MarvelsoftGUI\\MarvelsoftGUI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\zlome\\.nuget\\packages\\csvhelper\\15.0.5\\csvhelper.15.0.5.nupkg.sha512",
+    "C:\\Users\\zlome\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}

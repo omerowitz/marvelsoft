@@ -1,0 +1,17 @@
+C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftConsole\bin\Debug\netcoreapp3.1\MarvelsoftConsole.exe
+C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftConsole\obj\Debug\netcoreapp3.1\MarvelsoftConsole.csprojAssemblyReference.cache
+C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftConsole\obj\Debug\netcoreapp3.1\MarvelsoftConsole.AssemblyInfoInputs.cache
+C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftConsole\obj\Debug\netcoreapp3.1\MarvelsoftConsole.AssemblyInfo.cs
+C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftConsole\bin\Debug\netcoreapp3.1\CommandLine.dll
+C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftConsole\obj\Debug\netcoreapp3.1\MarvelsoftConsole.csproj.CopyComplete
+C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftConsole\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftConsole\bin\Debug\netcoreapp3.1\MarvelsoftConsole.deps.json
+C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftConsole\bin\Debug\netcoreapp3.1\MarvelsoftConsole.runtimeconfig.json
+C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftConsole\bin\Debug\netcoreapp3.1\MarvelsoftConsole.runtimeconfig.dev.json
+C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftConsole\bin\Debug\netcoreapp3.1\MarvelsoftConsole.dll
+C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftConsole\bin\Debug\netcoreapp3.1\MarvelsoftConsole.pdb
+C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftConsole\bin\Debug\netcoreapp3.1\CsvHelper.dll
+C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftConsole\obj\Debug\netcoreapp3.1\MarvelsoftConsole.csproj.CoreCompileInputs.cache
+C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftConsole\obj\Debug\netcoreapp3.1\MarvelsoftConsole.dll
+C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftConsole\obj\Debug\netcoreapp3.1\MarvelsoftConsole.pdb
+C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftConsole\obj\Debug\netcoreapp3.1\MarvelsoftConsole.genruntimeconfig.cache

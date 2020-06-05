@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "/1f4UndueaxfDsNsBIlCujQZekcKe4UxccilRJhOfPY9rVN9djBoR+WKGUuWj/dKF4Ww8//ek9YpdpbvXAolAw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\zlome\\source\\repos\\Marvelsoft\\MarvelsoftConsole\\MarvelsoftConsole.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\zlome\\.nuget\\packages\\commandlineparser\\2.8.0\\commandlineparser.2.8.0.nupkg.sha512",
+    "C:\\Users\\zlome\\.nuget\\packages\\csvhelper\\15.0.5\\csvhelper.15.0.5.nupkg.sha512",
+    "C:\\Users\\zlome\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\zlome\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

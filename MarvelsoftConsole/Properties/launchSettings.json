@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MarvelsoftConsole": {
+      "commandName": "Project",
+      "commandLineArgs": "-j inputB.json -c inputA.csv"
+    }
+  }
+}
