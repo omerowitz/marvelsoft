@@ -17,7 +17,7 @@ namespace MarvelsoftTests
         }
 
         [Test]
-        public async Task InterfaceParser_A_ProcessAsync()
+        public async Task Interface_A_ProcessAsync()
         {
             IParserMock.Setup(x => x.ProcessAsync())
                 .Returns(Task.CompletedTask);
@@ -28,7 +28,7 @@ namespace MarvelsoftTests
         }
 
         [Test]
-        public async Task InterfaceParser_B_ParseAsync()
+        public async Task Interface_B_ParseAsync()
         {
             IParserMock.Setup(x => x.ParseAsync<int>(1, 2))
                 .Returns(Task.FromResult(Task.CompletedTask));
