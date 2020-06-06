@@ -1,11 +1,11 @@
 ﻿using System.Threading.Tasks;
 
-namespace MarvelsoftConsole.parsers
+namespace MarvelsoftConsole.Interfaces
 {
     /// <summary>
     /// Interface for Parsers.
     /// </summary>
-    interface IParser
+    public interface IParser
     {
         /// <summary>
         /// Conducts processing.
@@ -20,6 +20,6 @@ namespace MarvelsoftConsole.parsers
         /// <param name="data"></param>
         /// <param name="index"></param>
         /// <returns></returns>
-        public Task<Task> Parse<T>(T data, int index);
+        public Task<Task> ParseAsync<T>(T data, int index);
     }
 }

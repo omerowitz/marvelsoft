@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MarvelsoftConsole.exceptions
+namespace MarvelsoftConsole.Exceptions
 {
     [Serializable]
     public class FileErrorException : Exception
@@ -9,7 +9,6 @@ namespace MarvelsoftConsole.exceptions
 
         public FileErrorException(string message)
             : base(message) { }
-        public FileErrorException(string message, Exception inner)
-                    : base(message, inner) { }
+        public FileErrorException(string message, Exception inner) : base(message, inner) { }
     }
 }

@@ -1,23 +1,23 @@
 ﻿using System.IO;
-using MarvelsoftConsole.cmdparser;
-using MarvelsoftConsole.exceptions;
+using MarvelsoftConsole.Models;
+using MarvelsoftConsole.Exceptions;
 
-namespace MarvelsoftConsole.helpers
+namespace MarvelsoftConsole.Helpers
 {
     /// <summary>
     /// A small helper library to handle some cases when loading or finding files.
     /// </summary>
     public class FileHelper
     {
-        protected Options options;
+        protected CommandLineOptions CommandLineOptions;
 
         /// <summary>
         /// Sets Options instance to be used by other membres.
         /// </summary>
         /// <param name="options"></param>
-        public FileHelper(Options options)
+        public FileHelper(CommandLineOptions options)
         {
-            this.options = options;
+            CommandLineOptions = options;
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace MarvelsoftConsole.helpers
         /// </summary>
         public void EnsureNotSame()
         {
-            if (this.options.Json == this.options.Csv)
+            if (CommandLineOptions.Json == CommandLineOptions.Csv)
             {
                 throw new FileErrorException("Your input is invalid. JSON and CSV files must not be same files.");
             }
@@ -40,14 +40,14 @@ namespace MarvelsoftConsole.helpers
         /// </summary>
         public void FilesExist()
         {
-            if (!File.Exists(this.options.Json))
+            if (!File.Exists(CommandLineOptions.Json))
             {
-                throw new FileErrorException($"JSON input file: {this.options.Json} is not found or does not exist.");
+                throw new FileErrorException($"JSON input file: {CommandLineOptions.Json} is not found or does not exist.");
             }
 
-            if (!File.Exists(this.options.Csv))
+            if (!File.Exists(CommandLineOptions.Csv))
             {
-                throw new FileErrorException($"CSV input file: {this.options.Csv} is not found or does not exist.");
+                throw new FileErrorException($"CSV input file: {CommandLineOptions.Csv} is not found or does not exist.");
             }
         }
 
@@ -68,8 +68,8 @@ namespace MarvelsoftConsole.helpers
 
         public void FileTypesValid()
         {
-            EnsureFileType(this.options.Json, "json");
-            EnsureFileType(this.options.Csv, "csv");
+            EnsureFileType(CommandLineOptions.Json, "json");
+            EnsureFileType(CommandLineOptions.Csv, "csv");
         }
 
         /// <summary>
@@ -79,14 +79,14 @@ namespace MarvelsoftConsole.helpers
         /// </summary>
         public void EnsureOutputIsCSV()
         {
-            if (!this.options.Output.Contains("."))
+            if (!Path.HasExtension(CommandLineOptions.Output))
             {
-                this.options.Output += ".csv";
+                CommandLineOptions.Output += ".csv";
             }
 
-            string filename = this.options.Output;
+            string filename = CommandLineOptions.Output;
 
-            if (!filename.EndsWith(".csv"))
+            if (Path.GetExtension(filename).ToLower() != ".csv")
             {
                 throw new FileErrorException($"Output filename must be of CSV type and end with a .csv extension, whilst your input was: {filename}.");
             }
@@ -97,7 +97,7 @@ namespace MarvelsoftConsole.helpers
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        public static Options FileNamesToBaseNames(Options options)
+        public static CommandLineOptions FileNamesToBaseNames(CommandLineOptions options)
         {
             // If files were provided as a path, we'll extract their filenames only:
             options.Json = Path.GetFileName(options.Json);

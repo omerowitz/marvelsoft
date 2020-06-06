@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-namespace MarvelsoftConsole.helpers
+namespace MarvelsoftConsole.Helpers
 {
     /// <summary>
     /// Handles thread-safe file reading with measuring time spent to load the file(s).
@@ -11,7 +11,7 @@ namespace MarvelsoftConsole.helpers
     {
         protected string Filename;
         protected FileStream Stream;
-        protected byte[] payload;
+        protected byte[] Payload;
 
         /// <summary>
         /// A Factory method for this class.
@@ -29,7 +29,7 @@ namespace MarvelsoftConsole.helpers
         /// <param name="filename"></param>
         public FileReader(string filename)
         {
-            this.Filename = filename;
+            Filename = filename;
         }
 
         /// <summary>
@@ -40,16 +40,16 @@ namespace MarvelsoftConsole.helpers
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
 
-            using (this.Stream = File.Open(this.Filename, FileMode.Open))
+            using (Stream = File.Open(Filename, FileMode.Open))
             {
-                this.payload = new byte[this.Stream.Length];
-                await this.Stream.ReadAsync(this.payload, 0, (int)this.Stream.Length);
+                Payload = new byte[Stream.Length];
+                await Stream.ReadAsync(Payload, 0, (int)Stream.Length);
             }
 
             stopwatch.Stop();
-            Summary.ElapsedRead(stopwatch.ElapsedMilliseconds, this.payload.Length, this.Filename);
+            Summary.ElapsedRead(stopwatch.ElapsedMilliseconds, Payload.Length, Filename);
 
-            return (Task.CompletedTask, this.payload.Length, this.Filename);
+            return (Task.CompletedTask, Payload.Length, Filename);
         }
         
         /// <summary>
@@ -58,7 +58,7 @@ namespace MarvelsoftConsole.helpers
         /// <returns></returns>
         public string GetFilename()
         {
-            return this.Filename;
+            return Filename;
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace MarvelsoftConsole.helpers
         /// <returns></returns>
         public FileStream GetFileStream()
         {
-            return this.Stream;
+            return Stream;
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace MarvelsoftConsole.helpers
         /// <returns></returns>
         public byte[] GetPayload()
         {
-            return this.payload;
+            return Payload;
         }
     }
 }

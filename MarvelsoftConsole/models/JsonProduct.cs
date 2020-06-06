@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace MarvelsoftConsole.models
+namespace MarvelsoftConsole.Models
 {
     /// <summary>
     /// Model class for JSON data used by NewtonJson library.

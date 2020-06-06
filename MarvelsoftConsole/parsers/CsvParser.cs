@@ -1,13 +1,13 @@
 ﻿using CsvHelper;
-using MarvelsoftConsole.helpers;
-using MarvelsoftConsole.models;
+using MarvelsoftConsole.Helpers;
+using MarvelsoftConsole.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace MarvelsoftConsole.parsers
+namespace MarvelsoftConsole.Parsers
 {
     /// <summary>
     /// CSV Parser implementation.
@@ -27,7 +27,7 @@ namespace MarvelsoftConsole.parsers
         /// <returns></returns>
         public override async Task ProcessAsync()
         {
-            await this.GetRecordsAsync();
+            await GetRecordsAsync();
         }
 
         /// <summary>
@@ -39,37 +39,36 @@ namespace MarvelsoftConsole.parsers
         /// <param name="data"></param>
         /// <param name="index"></param>
         /// <returns></returns>
-        public async override Task<Task> Parse<T>(T data, int index)
+        public async override Task<Task> ParseAsync<T>(T data, int index)
         {
             CsvProduct product = (CsvProduct)Convert.ChangeType(data, typeof(CsvProduct));
             CsvOutput output = new CsvOutput
             {
-                Filename = this.GetFileReader().GetFilename(),
+                Filename = GetFileReader().GetFilename(),
                 Id = product.Id,
                 Quantity = product.Quantity,
                 Price = product.Price
             };
 
-            await semaphoreSlim.WaitAsync();
+            await SemaphoreSlim.WaitAsync();
 
             try
             {
-                if (this.asyncFileWritter)
+                if (AsyncFileWriter)
                 {
                     CsvOutputSerializer csv = new CsvOutputSerializer(output);
-
-                    await this.GetStreamWriter().WriteLineAsync(csv.ToCsvString());
+                    await GetStreamWriter().WriteLineAsync(csv.ToCsvString());
                 }
                 else
                 {
-                    await this.AppendOutput(output);
+                    await AppendOutput(output);
                 }
 
-                Console.WriteLine("[CSV PARSER ] Processing line: {0} of file: {1}", index + 1, this.GetFileReader().GetFilename());
+                Console.WriteLine("[CSV PARSER ] Processing line: {0} of file: {1}", index + 1, GetFileReader().GetFilename());
             }
             finally
             {
-                semaphoreSlim.Release();
+                SemaphoreSlim.Release();
             }
 
             return Task.CompletedTask;
@@ -83,10 +82,13 @@ namespace MarvelsoftConsole.parsers
         /// <returns></returns>
         private async Task<CsvReader> GetRecordsAsync()
         {
-            using var memoryStream = new MemoryStream(this.GetFileReader().GetPayload());
+            using var memoryStream = new MemoryStream(GetFileReader().GetPayload());
             using var reader = new StreamReader(memoryStream);
             using var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
             csvReader.Configuration.HasHeaderRecord = false;
+            csvReader.Configuration.IgnoreBlankLines = true;
+            csvReader.Configuration.BadDataFound = null;
+            csvReader.Configuration.MissingFieldFound = null;
             csvReader.Configuration.AutoMap<CsvProduct>();
 
             int index = 0;
@@ -102,12 +104,12 @@ namespace MarvelsoftConsole.parsers
                         Price = csvReader.GetField<double>(2)
                     };
 
-                    await this.Parse(product, index);
+                    await ParseAsync(product, index);
                     index++;
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("[CSV PARSER ] ERROR: Unable to parse CSV object on line {0} of file: {1}", index, this.GetFileReader().GetFilename());
+                    Console.WriteLine("[CSV PARSER ] ERROR: Unable to parse CSV object on line {0} of file: {1}", index, GetFileReader().GetFilename());
                 }
             }
 

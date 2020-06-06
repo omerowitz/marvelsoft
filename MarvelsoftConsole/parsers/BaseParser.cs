@@ -1,12 +1,13 @@
-﻿using MarvelsoftConsole.helpers;
-using MarvelsoftConsole.models;
+﻿using MarvelsoftConsole.Helpers;
+using MarvelsoftConsole.Interfaces;
+using MarvelsoftConsole.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MarvelsoftConsole.parsers
+namespace MarvelsoftConsole.Parsers
 {
     /// <summary>
     /// Abstract class implementing getters and setters for fileReader and csvOutput members.
@@ -15,17 +16,16 @@ namespace MarvelsoftConsole.parsers
     /// </summary>
     public abstract class BaseParser : IParser
     {
-        private readonly FileReader fileReader;
-        private StreamWriter streamWriter;
-        private readonly List<CsvOutput> csvOutput;
-        public bool asyncFileWritter = true;
+        public bool AsyncFileWriter = true;
+        private readonly FileReader FileReader;
+        private StreamWriter StreamWriter;
+        private readonly List<CsvOutput> CsvOutput;
+        public static SemaphoreSlim SemaphoreSlim = new SemaphoreSlim(1, 1);
 
-        public static SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
-        
         public BaseParser(FileReader fileReader, List<CsvOutput> csvOutput)
         {
-            this.fileReader = fileReader;
-            this.csvOutput = csvOutput;
+            FileReader = fileReader;
+            CsvOutput = csvOutput;
         }
 
         /// <summary>
@@ -34,12 +34,16 @@ namespace MarvelsoftConsole.parsers
         /// <returns></returns>
         public FileReader GetFileReader()
         {
-            return this.fileReader;
+            return FileReader;
         }
 
+        /// <summary>
+        /// Sets the stream writer.
+        /// </summary>
+        /// <param name="streamWriter"></param>
         public void SetStreamWriter(StreamWriter streamWriter)
         {
-            this.streamWriter = streamWriter;
+            StreamWriter = streamWriter;
         }
 
         /// <summary>
@@ -48,7 +52,7 @@ namespace MarvelsoftConsole.parsers
         /// <returns></returns>
         public StreamWriter GetStreamWriter()
         {
-            return this.streamWriter;
+            return StreamWriter;
         }
 
         /// <summary>
@@ -57,14 +61,19 @@ namespace MarvelsoftConsole.parsers
         /// <returns></returns>
         public List<CsvOutput> GetOutput()
         {
-            return this.csvOutput;
+            return CsvOutput;
         }
 
+        /// <summary>
+        /// This methods is async since it runs a in async mode so we'll fill up csvOutput concurrently.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public async Task AppendOutput(CsvOutput item)
         {
             await Task.Run(() =>
             {
-                this.csvOutput.Add(item);
+                CsvOutput.Add(item);
             });
         }
 
@@ -73,7 +82,7 @@ namespace MarvelsoftConsole.parsers
             throw new NotImplementedException();
         }
 
-        public virtual Task<Task> Parse<T>(T data, int index)
+        public virtual Task<Task> ParseAsync<T>(T data, int index)
         {
             throw new NotImplementedException();
         }

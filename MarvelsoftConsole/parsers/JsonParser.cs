@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using MarvelsoftConsole.helpers;
-using MarvelsoftConsole.models;
+using MarvelsoftConsole.Helpers;
+using MarvelsoftConsole.Models;
 using Newtonsoft.Json;
 
-namespace MarvelsoftConsole.parsers
+namespace MarvelsoftConsole.Parsers
 {
     /// <summary>
     /// JSON Parser implementation.
@@ -23,14 +23,14 @@ namespace MarvelsoftConsole.parsers
         /// <returns></returns>
         public override async Task ProcessAsync()
         {
-            string[] records = this.GetRecords();
+            string[] records = GetRecords();
 
             for (int i = 0; i < records.Length; i++)
             {
                 int index = i + 1;
                 string record = records[i];
 
-                await this.Parse(record, index);
+                await ParseAsync(record, index);
             }
         }
 
@@ -43,7 +43,7 @@ namespace MarvelsoftConsole.parsers
         /// <param name="data"></param>
         /// <param name="index"></param>
         /// <returns></returns>
-        public async override Task<Task> Parse<T>(T data, int index)
+        public async override Task<Task> ParseAsync<T>(T data, int index)
         {
             try {
                 string json = (string)Convert.ChangeType(data, typeof(string));
@@ -52,36 +52,36 @@ namespace MarvelsoftConsole.parsers
 
                 CsvOutput output = new CsvOutput
                 {
-                    Filename = this.GetFileReader().GetFilename(),
+                    Filename = GetFileReader().GetFilename(),
                     Id = product.Id,
                     Quantity = product.Quantity,
                     Price = product.Price
                 };
 
-                await semaphoreSlim.WaitAsync();
+                await SemaphoreSlim.WaitAsync();
 
                 try
                 {
-                    if (this.asyncFileWritter)
+                    if (AsyncFileWriter)
                     {
                         CsvOutputSerializer csv = new CsvOutputSerializer(output);
 
-                        await this.GetStreamWriter().WriteLineAsync(csv.ToCsvString());
+                        await GetStreamWriter().WriteLineAsync(csv.ToCsvString());
                     }
                     else
                     {
-                        await this.AppendOutput(output);
+                        await AppendOutput(output);
                     }
 
-                    Console.WriteLine("[JSON PARSER] Processing line: {0} of file: {1}", index, this.GetFileReader().GetFilename());
+                    Console.WriteLine("[JSON PARSER] Processing line: {0} of file: {1}", index, GetFileReader().GetFilename());
                 }
                 finally
                 {
-                    semaphoreSlim.Release();
+                    SemaphoreSlim.Release();
                 }
             } catch(Exception)
             {
-                Console.WriteLine("[JSON PARSER] ERROR: Unable to parse JSON object on line {0} of file: {1}", index, this.GetFileReader().GetFilename());
+                Console.WriteLine("[JSON PARSER] ERROR: Unable to parse JSON object on line {0} of file: {1}", index, GetFileReader().GetFilename());
             }
 
             return Task.CompletedTask;
@@ -93,7 +93,7 @@ namespace MarvelsoftConsole.parsers
         /// <returns></returns>
         private string[] GetRecords()
         {
-            var bytesAsString = Encoding.UTF8.GetString(this.GetFileReader().GetPayload());
+            var bytesAsString = Encoding.UTF8.GetString(GetFileReader().GetPayload());
 
             string[] lines = bytesAsString.Split(
                 new[] { Environment.NewLine },

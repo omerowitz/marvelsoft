@@ -1,10 +1,9 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
-using MarvelsoftConsole.cmdparser;
-using MarvelsoftConsole.exceptions;
-using MarvelsoftConsole.helpers;
-using MarvelsoftConsole.models;
-using MarvelsoftConsole.parsers;
+using MarvelsoftConsole.Models;
+using MarvelsoftConsole.Exceptions;
+using MarvelsoftConsole.Helpers;
+using MarvelsoftConsole.Parsers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,50 +18,49 @@ namespace MarvelsoftConsole
 {
     public sealed class Bootstrap
     {
-        public Options Options { get; set; }
+        public CommandLineOptions CommandLineOptions { get; set; }
 
-        private FileReader jsonReader;
+        private FileReader JsonReader;
 
-        private FileReader csvReader;
+        private FileReader CsvReader;
 
-        private List<CsvOutput> csvOutput;
+        private List<CsvOutput> CsvOutput;
 
-        private JsonParser jsonParser;
+        private JsonParser JsonParser;
 
-        private parsers.CsvParser csvParser;
+        private Parsers.CsvParser CsvParser;
 
-        public async Task Start()
+        public async Task<Task> Start()
         {
-            this.CheckFiles();
+            CheckFiles();
 
             List<Task> filesTasks = new List<Task>()
             {
-                this.ReadFilesAsync(),
-                CreateOutputFileAsync()
+                ReadFilesAsync(),
+                CreateEmptyOutputFileAsync()
             };
 
             await Task.WhenAll(filesTasks);
 
-            this.csvOutput = new List<CsvOutput>();
+            CsvOutput = new List<CsvOutput>();
 
-            await this.Run();
+            return await Run();
         }
 
-        private async Task Run()
+        private async Task<Task> Run()
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
 
-            this.InitializeParsers();
-
-            await this.RunParsersAsync();
+            InitializeParsers();
+            var result = await RunParsersAsync();
 
             stopwatch.Stop();
+            Summary.ElapsedParse(stopwatch.ElapsedMilliseconds, CommandLineOptions.Output);
 
-            Summary.ElapsedParse(stopwatch.ElapsedMilliseconds, this.Options.Output);
+            long outputFileSize = new FileInfo(CommandLineOptions.Output).Length;
+            Summary.Finish(CommandLineOptions.Output, outputFileSize, CommandLineOptions.Wait);
 
-            long outputFileSize = new FileInfo(this.Options.Output).Length;
-
-            Summary.Finish(this.Options.Output, outputFileSize);
+            return result;
         }
 
         /// <summary>
@@ -71,48 +69,50 @@ namespace MarvelsoftConsole
         /// Otherwise, if enabled, we'll use CSVHelper's method to create the CSV file.
         /// </summary>
         /// <returns></returns>
-        private async Task RunParsersAsync()
+        private async Task<Task> RunParsersAsync()
         {
-            if (!this.Options.Sync) {
-                using FileStream stream = new FileStream(this.Options.Output, FileMode.Append, FileAccess.Write, FileShare.ReadWrite, 4096, true);
+            if (!CommandLineOptions.Sync) {
+                using FileStream stream = new FileStream(CommandLineOptions.Output, FileMode.Append, FileAccess.Write, FileShare.ReadWrite, 4096, true);
                 using StreamWriter sw = new StreamWriter(stream);
 
-                this.jsonParser.SetStreamWriter(sw);
-                this.csvParser.SetStreamWriter(sw);
+                JsonParser.SetStreamWriter(sw);
+                CsvParser.SetStreamWriter(sw);
 
                 var parsersTasks = new List<Task>
                     {
-                        this.jsonParser.ProcessAsync(),
-                        this.csvParser.ProcessAsync()
+                        JsonParser.ProcessAsync(),
+                        CsvParser.ProcessAsync()
                     };
 
                 await Task.WhenAll(parsersTasks);
             } else
             {
-                this.jsonParser.asyncFileWritter = false;
-                this.csvParser.asyncFileWritter = false;
+                JsonParser.AsyncFileWriter = false;
+                CsvParser.AsyncFileWriter = false;
 
                 var parsersTasks = new List<Task>
                 {
-                    this.jsonParser.ProcessAsync(),
-                    this.csvParser.ProcessAsync()
+                    JsonParser.ProcessAsync(),
+                    CsvParser.ProcessAsync()
                 };
 
                 await Task.WhenAll(parsersTasks);
 
                 await DumpOutputFileAsync();
             }
+
+            return Task.CompletedTask;
         }
 
         private void InitializeParsers()
         {
-            this.jsonParser = new JsonParser(this.jsonReader, this.csvOutput);
-            this.csvParser = new parsers.CsvParser(this.csvReader, this.csvOutput);
+            JsonParser = new JsonParser(JsonReader, CsvOutput);
+            CsvParser = new Parsers.CsvParser(CsvReader, CsvOutput);
         }
 
         private async Task<Task> DumpOutputFileAsync()
         {
-            using (var writer = new StreamWriter(this.Options.Output))
+            using (var writer = new StreamWriter(CommandLineOptions.Output))
             using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
             {
                 csv.Configuration.HasHeaderRecord = false;
@@ -131,7 +131,7 @@ namespace MarvelsoftConsole
                     return ConfigurationFunctions.ShouldQuote(field, context);
                 };
 
-                await csv.WriteRecordsAsync(this.csvOutput);
+                await csv.WriteRecordsAsync(CsvOutput);
                 await writer.FlushAsync();
             }
 
@@ -147,7 +147,7 @@ namespace MarvelsoftConsole
         {
             try
             {
-                FileHelper fileHelper = new FileHelper(this.Options);
+                FileHelper fileHelper = new FileHelper(CommandLineOptions);
                 fileHelper.EnsureNotSame();
                 fileHelper.FilesExist();
                 fileHelper.FileTypesValid();
@@ -159,7 +159,7 @@ namespace MarvelsoftConsole
                 Environment.Exit(-1);
             }
 
-            Summary.Start(this.Options);
+            Summary.Start(CommandLineOptions);
         }
 
         /// <summary>
@@ -171,20 +171,20 @@ namespace MarvelsoftConsole
         /// <returns></returns>
         private async Task<Task> ReadFilesAsync()
         {
-            this.jsonReader = FileReader.Open(this.Options.Json);
-            this.csvReader = FileReader.Open(this.Options.Csv);
+            JsonReader = FileReader.Open(CommandLineOptions.Json);
+            CsvReader = FileReader.Open(CommandLineOptions.Csv);
 
             var listTask = new List<Task<(Task, int, string)>>
             {
-                this.jsonReader.ReadFileAsync(),
-                this.csvReader.ReadFileAsync()
+                JsonReader.ReadFileAsync(),
+                CsvReader.ReadFileAsync()
             };
 
             (Task, int, string)[] result = await Task.WhenAll(listTask);
 
             try
             {
-                this.ValidateReadFiles(result);
+                ValidateReadFiles(result);
             } catch(FileErrorException ex)
             {
                 Console.WriteLine($"[{ex.GetType().Name}]:\n{ex.Message}");
@@ -214,11 +214,11 @@ namespace MarvelsoftConsole
         /// Creates a new file if non-existant, or truncates the existing one.
         /// </summary>
         /// <param name="filename"></param>
-        private async Task<Task> CreateOutputFileAsync()
+        private async Task<Task> CreateEmptyOutputFileAsync()
         {
             try
             {
-                await File.WriteAllTextAsync(this.Options.Output, string.Empty, Encoding.UTF8);
+                await File.WriteAllTextAsync(CommandLineOptions.Output, string.Empty, Encoding.UTF8);
             }
             catch (Exception e)
             {

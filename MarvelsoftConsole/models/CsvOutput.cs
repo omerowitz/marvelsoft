@@ -1,4 +1,4 @@
-﻿namespace MarvelsoftConsole.models
+﻿namespace MarvelsoftConsole.Models
 {
     /// <summary>
     /// Model class mapping the output file data used by the CSVHelper library.

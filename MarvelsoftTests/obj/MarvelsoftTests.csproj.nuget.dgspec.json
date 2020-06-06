@@ -4,14 +4,14 @@
     "C:\\Users\\zlome\\source\\repos\\Marvelsoft\\MarvelsoftTests\\MarvelsoftTests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\zlome\\source\\repos\\Marvelsoft\\MarvelsoftTests\\MarvelsoftTests.csproj": {
+    "C:\\Users\\zlome\\source\\repos\\Marvelsoft\\MarvelsoftConsole\\MarvelsoftConsole.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\zlome\\source\\repos\\Marvelsoft\\MarvelsoftTests\\MarvelsoftTests.csproj",
-        "projectName": "MarvelsoftTests",
-        "projectPath": "C:\\Users\\zlome\\source\\repos\\Marvelsoft\\MarvelsoftTests\\MarvelsoftTests.csproj",
+        "projectUniqueName": "C:\\Users\\zlome\\source\\repos\\Marvelsoft\\MarvelsoftConsole\\MarvelsoftConsole.csproj",
+        "projectName": "MarvelsoftConsole",
+        "projectPath": "C:\\Users\\zlome\\source\\repos\\Marvelsoft\\MarvelsoftConsole\\MarvelsoftConsole.csproj",
         "packagesPath": "C:\\Users\\zlome\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\zlome\\source\\repos\\Marvelsoft\\MarvelsoftTests\\obj\\",
+        "outputPath": "C:\\Users\\zlome\\source\\repos\\Marvelsoft\\MarvelsoftConsole\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
@@ -42,9 +42,87 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
+            "CommandLineParser": {
+              "target": "Package",
+              "version": "[2.8.0, )"
+            },
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[15.0.5, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\zlome\\source\\repos\\Marvelsoft\\MarvelsoftTests\\MarvelsoftTests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\zlome\\source\\repos\\Marvelsoft\\MarvelsoftTests\\MarvelsoftTests.csproj",
+        "projectName": "MarvelsoftTests",
+        "projectPath": "C:\\Users\\zlome\\source\\repos\\Marvelsoft\\MarvelsoftTests\\MarvelsoftTests.csproj",
+        "packagesPath": "C:\\Users\\zlome\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\zlome\\source\\repos\\Marvelsoft\\MarvelsoftTests\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\zlome\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {
+              "C:\\Users\\zlome\\source\\repos\\Marvelsoft\\MarvelsoftConsole\\MarvelsoftConsole.csproj": {
+                "projectPath": "C:\\Users\\zlome\\source\\repos\\Marvelsoft\\MarvelsoftConsole\\MarvelsoftConsole.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
               "version": "[16.4.0, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.14.1, )"
             },
             "NUnit3TestAdapter": {
               "target": "Package",

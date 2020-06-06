@@ -267,9 +267,9 @@ namespace MarvelsoftGUI
             csv.Configuration.HasHeaderRecord = false;
             csv.Configuration.IgnoreBlankLines = true;
             csv.Configuration.BadDataFound = null;
-            csv.Configuration.AutoMap<CsvProduct>();
             csv.Configuration.Delimiter = ";";
             csv.Configuration.MissingFieldFound = null;
+            csv.Configuration.AutoMap<CsvProduct>();
 
             try
             {

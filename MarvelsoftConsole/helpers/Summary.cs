@@ -1,11 +1,11 @@
-﻿using MarvelsoftConsole.cmdparser;
+﻿using MarvelsoftConsole.Models;
 using System;
 
-namespace MarvelsoftConsole.helpers
+namespace MarvelsoftConsole.Helpers
 {
     public class Summary
     {
-        public static void Start(Options options)
+        public static void Start(CommandLineOptions options)
         {
             Console.WriteLine("Preparing to load provided files...\n");
 
@@ -27,11 +27,15 @@ namespace MarvelsoftConsole.helpers
             Console.WriteLine("\nTook {0} ms. to process both files and store it in: {1}.", elapsedMilliseconds, filename);
         }
 
-        public static void Finish(string filename, long filesize)
+        public static void Finish(string filename, long filesize, bool waitUserInput = true)
         {
             Console.WriteLine("\nOutput file: {0} generated size is: {1} bytes.", filename, filesize);
-            Console.WriteLine("\n\nHit ENTER to continue...");
-            Console.ReadLine();
+
+            if (waitUserInput)
+            {
+                Console.WriteLine("\n\nHit ENTER to continue...");
+                Console.ReadLine();
+            }
         }
     }
 }
