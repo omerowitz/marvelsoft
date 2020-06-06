@@ -124,10 +124,10 @@ If you are unable to run some of the project, that might be an issue when Visual
 
 Recently, Microsoft released new version of Visual Studio Community 2019 Version 16.6.1 which has updates on Windows Forms Designer for .NET Core application, but it still lacks ability to edit User Controls or Custom Controls and that might cause an issue when the control cannot be built and used in the GUI project.
 
-In order to avoid this problem, you can reset your cloned Git repository to commit `f236e7f` which is the latest stable commit with builds:
+In order to avoid this problem, you can reset your cloned Git repository to commit `d259f6e` which is the latest stable commit with builds:
 
 ```
-$ git reset --hard f236e7f
+$ git reset --hard d259f6e
 ```
 
 After this, you should rebuild the entire solution and run the application(s).
