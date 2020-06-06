@@ -94,3 +94,10 @@ C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftTests\obj\Release\netcoreapp3.1
 C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftTests\obj\Release\netcoreapp3.1\MarvelsoftTests.dll
 C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftTests\obj\Release\netcoreapp3.1\MarvelsoftTests.pdb
 C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftTests\obj\Release\netcoreapp3.1\MarvelsoftTests.genruntimeconfig.cache
+C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftTests\bin\Release\netcoreapp3.1\MarvelsoftConsole.exe
+C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftTests\bin\Release\netcoreapp3.1\Castle.Core.dll
+C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftTests\bin\Release\netcoreapp3.1\CommandLine.dll
+C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftTests\bin\Release\netcoreapp3.1\CsvHelper.dll
+C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftTests\bin\Release\netcoreapp3.1\Moq.dll
+C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftTests\bin\Release\netcoreapp3.1\MarvelsoftConsole.dll
+C:\Users\zlome\source\repos\Marvelsoft\MarvelsoftTests\bin\Release\netcoreapp3.1\MarvelsoftConsole.pdb
