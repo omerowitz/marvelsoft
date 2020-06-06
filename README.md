@@ -47,7 +47,7 @@ ERROR(S):
   --version       Display version information.
 ```
 
-Further documentation for console application can be found here.
+Further documentation for console application [can be found here](https://github.com/omerowitz/marvelsoft/tree/master/MarvelsoftConsole).
 
 ---
 
@@ -61,7 +61,7 @@ The binary name is `MarvelsoftGUI.exe` and this is a preview of how the applicat
 
 White application title container and the dark grey area is the entire custom control, along with controls on it.
 
-Further documentation for WinForms application can be found here.
+Further documentation for WinForms application [can be found here](https://github.com/omerowitz/marvelsoft/tree/master/MarvelsoftGUI).
 
 ---
 
@@ -104,7 +104,7 @@ Some of the tests will either need actual CSV or JSON files to conduct tests, an
 
 In both *Release* and *Debug* directories of the test project, you will find both `inputA.csv` and `inputB.json` files. If you want to make a test in which some of the unit tests fail, just delete those files.
 
-Further documentation for the test project can be found here.
+Further documentation for the test project [can be found here](https://github.com/omerowitz/marvelsoft/tree/master/MarvelsoftTests).
 
 ---
 
