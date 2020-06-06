@@ -73,7 +73,7 @@ Unit tests are written in a top-down alphabetic order by appearance of classes o
 
 The entire test project consists of total **35 unit tests** for various test cases of the console application.
 
-Test classes are prefixed with a `Test_` followed by an alphabetic letter ie. `A_` followed by a class which is tested, for example:
+Test classes are prefixed with a `Test_` followed by an alphabetic letter i.e. `A_` followed by a class which is tested, for example:
 
 ```
 Test_D_InterfaceParser
